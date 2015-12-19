@@ -2,13 +2,9 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.todorovh.myfirstapp.StartingActivity"
-    android:weightSum="1">
+    android:orientation="horizontal">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -16,12 +12,10 @@
         android:background="@color/colorWhite">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="@dimen/starting_activity_margin_left"
-            android:layout_marginRight="@dimen/starting_activity_margin_right"
+            android:layout_width="250dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center|top"
             android:layout_marginTop="@dimen/starting_activity_margin_top"
-            android:layout_marginBottom="@dimen/starting_activity_margin_bottom"
             android:id="@+id/logoImage"
             android:background="@mipmap/logo_big"
             android:nestedScrollingEnabled="false" />
@@ -32,15 +26,17 @@
             android:layout_height="match_parent">
 
            <ListView
-               android:id="@+id/right_drawer"
+               android:id="@+id/right_drawer_list_view"
                android:layout_width="240dp"
-               android:layout_height="match_parent"
-               android:layout_gravity="right"
+               android:layout_height="wrap_content"
+               android:layout_gravity="right|center"
                android:choiceMode="singleChoice"
-               android:divider="#4C4C4C"
-               android:dividerHeight="1dp"
+               android:divider="#FFFFFF"
+               android:dividerHeight="3dp"
                android:background="#CECECE"
-               android:drawSelectorOnTop="true"/>
+               android:drawSelectorOnTop="true">
+
+           </ListView>
 
         </android.support.v4.widget.DrawerLayout>
 

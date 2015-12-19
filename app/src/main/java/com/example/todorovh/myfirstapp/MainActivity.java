@@ -1,5 +1,6 @@
 package com.example.todorovh.myfirstapp;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -11,7 +12,10 @@ import android.view.View;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,19 +23,38 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private Toolbar toolbar;
     private ImageButton falseDrawerButton;
+    private ListView mListView;
+    private Animation animRotateClockWise;
+    private Animation animRotateClockWiseRev;
+    private MyAdapter mMyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starting);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        falseDrawerButton = (ImageButton) findViewById(R.id.false_drawer_button);
-        final Animation animRotateClockWise = AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise);
-        final Animation animRotateClockWiseRev = AnimationUtils.loadAnimation(this, R.anim.rotate_clockwise_reverse);
-
+        init();
         setSupportActionBar(toolbar);
+        setmActionBarDrawerToggle();
+        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
+        setFalseDrawerButtonOnClick();
+        mMyAdapter = new MyAdapter(this);
+        mListView.setAdapter(mMyAdapter);
 
+        setLoginButtonOnClick(mListView);
+    }
+
+    public void init(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mListView = (ListView) findViewById(R.id.right_drawer_list_view);
+        falseDrawerButton = (ImageButton) findViewById(R.id.false_drawer_button);
+        animRotateClockWise = AnimationUtils
+                .loadAnimation(this, R.anim.rotate_clockwise);
+        animRotateClockWiseRev = AnimationUtils
+                .loadAnimation(this, R.anim.rotate_clockwise_reverse);
         mDrawerLayout = (DrawerLayout) findViewById( R.id.drawer_layout);
+    }
+
+    private void setmActionBarDrawerToggle(){
         mActionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,
                 mDrawerLayout,
@@ -53,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle( R.string.drawer_closed );
             }
         };
+    }
 
-        mDrawerLayout.setDrawerListener(mActionBarDrawerToggle);
-
+    private void setFalseDrawerButtonOnClick(){
         falseDrawerButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -91,5 +114,24 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setLoginButtonOnClick(ListView listView){
+
+        final ListView lv = listView;
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Object obj = lv.getAdapter().getItemId(position);
+
+                if ((long)obj == (long)R.string.login){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                } else if ((long)obj == (long)R.string.register){
+                    startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                }
+            }
+        });
     }
 }
